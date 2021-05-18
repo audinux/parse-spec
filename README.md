@@ -11,3 +11,20 @@ The Json to generate is not fixed yet, but should look like:
 ...
 ]
 ```
+
+The fields (parsed from the RPM spec) would be:
+- name
+- version
+- url (of the source project)
+- license
+- summary
+- description
+
+For the "Facets", they will be added as comment in the spec file:
+```
+...
+# tags: foo, bar
+# category: Synthesiser
+...
+```
+Maybe other facets should be added. We start with tags and we will see what is useful to filter.
