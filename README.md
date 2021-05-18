@@ -33,9 +33,11 @@ Maybe other facets should be added. We start with tags and we will see what is u
 ## Using python-rpm-spec
 
 Beware there are multiple other packages called `pyrpm`! 
-You MUST not install `pyrpm`, but `python-rpm-spec`! 
+
+You MUST not install `pyrpm`, but `python-rpm-spec`!   (Very counterintuitive!) 
 
 - `pip install python-rpm-spec`  
 - `from pyrpm.spec import Spec ...` in the code
 
-Very counterintuitive!
+
+The `%description` is not supported in version `0.10`. https://github.com/bkircher/python-rpm-spec/issues/40
