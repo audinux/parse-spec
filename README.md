@@ -28,3 +28,14 @@ For the "Facets", they will be added as comment in the spec file:
 ...
 ```
 Maybe other facets should be added. We start with tags and we will see what is useful to filter.
+
+
+## Using python-rpm-spec
+
+Beware there are multiple other packages called `pyrpm`! 
+You MUST not install `pyrpm`, but `python-rpm-spec`! 
+
+- `pip install python-rpm-spec`  
+- `from pyrpm.spec import Spec ...` in the code
+
+Very counterintuitive!
