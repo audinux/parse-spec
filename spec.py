@@ -2,7 +2,7 @@
 
 This is a copy of https://github.com/BrunoVernay/python-rpm-spec/blob/Pull-Request_to_0_10/pyrpm/spec.py
 
-The copy has then been modified to add non standard fields
+The copy has then been modified to add non standard fields (`# Tag:`, `# Type:` and `# Category:`)
 
 """
 
@@ -233,6 +233,9 @@ _tags = [
     _NameValue("url", re_tag_compile(r"^URL\s*:\s*(\S+)")),
     _NameValue("buildroot", re_tag_compile(r"^BuildRoot\s*:\s*(\S+)")),
     _NameValue("buildarch", re_tag_compile(r"^BuildArch\s*:\s*(\S+)")),
+    _NameValue("tag", re_tag_compile(r"^#\s*Tag\s*:\s*(.+)")),
+    _NameValue("type", re_tag_compile(r"^#\s*Type\s*:\s*(.+)")),
+    _NameValue("category", re_tag_compile(r"^#\s*Category\s*:\s*(.+)")),
     _ListAndDict("sources", re_tag_compile(r"^(Source\d*\s*):\s*(.+)")),
     _ListAndDict("patches", re_tag_compile(r"^(Patch\d*\s*):\s*(\S+)")),
     _List("build_requires", re_tag_compile(r"^BuildRequires\s*:\s*(.+)")),

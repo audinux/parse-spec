@@ -1,7 +1,8 @@
 # parse-spec
+
 Parsing RPM Spec files to generate json data
 
-The `main.py` will generate 2 json files (one pretty print, one minimized) from the folder `test/`.
+The `main.py` generates 2 json files (one pretty print, one minimized) from the folder `test/`.
 
 The fields (parsed from the RPM spec) would be:
 - name
@@ -12,7 +13,7 @@ The fields (parsed from the RPM spec) would be:
 - description
 - packages (list of packages names)
 
-For the "Facets", they will be added as comment in the spec file:
+For the "Facets", they are added as comment in the spec file:
 ```
 ...
 # tags: foo, bar
@@ -30,5 +31,4 @@ and `# Tags: ...` that we keep local to this repo, because these are non-standar
 
 ## TODO
 
-- parse the `# tags: ..` and other non-standard fields 
 - add the folder as a program argument

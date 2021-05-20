@@ -24,6 +24,12 @@ def parse_spec(file_name):
     output["license"] = spec.license
     output["url"] = spec.url
     output["description"] = spec.description.rstrip()
+    if spec.tag is not None:
+        output["tag"] = [x.strip() for x in spec.tag.split(',')]
+    if spec.type is not None:
+        output["type"] = [x.strip() for x in spec.type.split(',')]
+    if spec.category is not None:
+        output["category"] = [x.strip() for x in spec.category.split(',')]
     output["packages"] = []
     for package in spec.packages:
         output["packages"].append(package.name)
