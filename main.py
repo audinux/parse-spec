@@ -1,45 +1,51 @@
-from pyrpm.spec import Spec, replace_macros
+"""Python application to read a directory of spec files and output a json file
+
+Currently it output one element per spec file.
+Later we could add one element (or sub-element) per package.
+
+"""
+from spec import Spec
 import json
 from pathlib import Path
 
 
-def parse_spec(file_name, packages):
+def parse_spec(file_name):
     """
     Parse a spec file and append the packages to the list
-    IF there was only one package per file, it would be simpler to return the data
+    Even if there are multiple packages, only one element will be returned
     :param file_name:
-    :param packages: list that will be updated
-    :return: the updated liste
+    :return: the element data
     """
-    package = {}
+    output = {}
     spec = Spec.from_file(file_name)
-    print("Spec Name: " + spec.name + " ; Version: " + spec.version + " ; License: " + spec.license
-          + " ; URL: " + spec.url + " ; Summary: " + spec.summary)
-    package["license"] = spec.license
-    package["url"] = spec.url
-    package["name"] = spec.name
-    # TODO call some function to parse the description ...
-    # TODO call some function to parse the tags in comments ...
-    packages.append(package)
-
+    print(" ; Spec Name: " + spec.name)
+    output["name"] = spec.name
+    output["summary"] = spec.summary
+    output["license"] = spec.license
+    output["url"] = spec.url
+    output["description"] = spec.description.rstrip()
+    output["packages"] = []
     for package in spec.packages:
-        print(f'{package.name}: {package.summary if hasattr(package, "summary") else spec.summary}')
-        # Not used yet ...
+        output["packages"].append(package.name)
 
-    return packages
+    # TODO call some function to parse the tags in comments ...
+
+    return output
 
 
 if __name__ == '__main__':
 
     current_dir = "."
-    packages = []
-    print("\nFor each directory in \"" + current_dir + "\" , read the spec file")
+    rpm_spec = []
+    print("\nFor each directory in \"" + current_dir + "\" , read the RPM spec file")
     path_list = Path(current_dir).glob('**/*.spec')
     for path in path_list:
-        # because path is object not string
         path_in_str = str(path)
-        print("  File: " + path_in_str)
-        packages = parse_spec(path_in_str, packages)
+        print("  File: " + path_in_str, end=" \t\t")
+        rpm_spec.append(parse_spec(path_in_str))
 
     print("  output a json file")
-    print(json.dumps(packages))
+    with open("search-data.pretty.json", "w") as write_file_pp:
+        json.dump(rpm_spec, write_file_pp, indent=2)
+    with open("search-data.json", "w") as write_file_min:
+        json.dump(rpm_spec, write_file_min)

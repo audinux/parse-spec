@@ -1,18 +1,13 @@
 """Python module for parsing RPM spec files.
 
-RPMs are build from a package's sources along with a spec file. The spec file controls how the RPM
-is built. This module allows you to parse spec files and gives you simple access to various bits of
-information that is contained in the spec file.
+This is a copy of https://github.com/BrunoVernay/python-rpm-spec/blob/Pull-Request_to_0_10/pyrpm/spec.py
 
-Current status: This module does not parse everything of a spec file. Only the pieces I needed. So
-there is probably still plenty of stuff missing. However, it should not be terribly complicated to
-add support for the missing pieces.
+The copy has then been modified to add non standard fields
 
 """
 
 import re
 import sys
-from warnings import warn
 from abc import ABCMeta, abstractmethod
 from typing import Any, Dict, List, Optional, Union, Tuple, Type, cast
 
@@ -222,7 +217,6 @@ class _DummyMacroDef(_Tag):
 
     def update_impl(self, spec_obj, context, match_obj, line):
         context["line_processor"] = None
-        warn("Unknown macro: " + line)
         return spec_obj, context
 
 
