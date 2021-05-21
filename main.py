@@ -41,14 +41,17 @@ def parse_spec(file_name):
 
 if __name__ == '__main__':
 
-    current_dir = "."
+    current_dir = "../fedora-spec"      # replace by "." to use the current directory and the spec in tests/
     rpm_spec = []
     print("\nFor each directory in \"" + current_dir + "\" , read the RPM spec file")
     path_list = Path(current_dir).glob('**/*.spec')
     for path in path_list:
         path_in_str = str(path)
         print("  File: " + path_in_str, end=" \t\t")
-        rpm_spec.append(parse_spec(path_in_str))
+        if path.name in ["nwjs.spec"]:  # Some .spec are strange!
+            print("Excluded!!")
+        else:
+            rpm_spec.append(parse_spec(path_in_str))
 
     print("  output a json file")
     with open("search-data.pretty.json", "w") as write_file_pp:

@@ -22,6 +22,15 @@ For the "Facets", they are added as comment in the spec file:
 ```
 Maybe other facets should be added. We start with tags and we will see what is useful to filter.
 
+## Usage
+
+1. Check the path line 44 in `main.py` 
+2. Run `python main.py` 
+
+For test, the application can read the `tests` directory, which contains a few folders.
+
+To run on the full list of spec, clone the `fedora-spec` spec repo next to this repo.
+
 
 ## Using python-rpm-spec
 
