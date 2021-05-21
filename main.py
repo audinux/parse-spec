@@ -20,6 +20,7 @@ def parse_spec(file_name):
     spec = Spec.from_file(file_name)
     print(" ; Spec Name: " + spec.name)
     output["name"] = spec.name
+    output["version"] = spec.version
     output["summary"] = spec.summary
     output["license"] = spec.license
     output["url"] = spec.url
