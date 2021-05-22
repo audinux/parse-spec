@@ -24,7 +24,8 @@ def parse_spec(file_name):
     output["summary"] = spec.summary
     output["license"] = spec.license
     output["url"] = spec.url
-    output["description"] = spec.description.rstrip()
+    if spec.description is not None:
+        output["description"] = spec.description.rstrip()
     if spec.tag is not None:
         output["tag"] = [x.strip() for x in spec.tag.split(',')]
     if spec.type is not None:
