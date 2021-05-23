@@ -4,7 +4,7 @@ Currently it output one element per spec file.
 Later we could add one element (or sub-element) per package.
 
 """
-from spec import Spec
+from spec import Spec, replace_macros
 import json
 from pathlib import Path
 
@@ -20,8 +20,8 @@ def parse_spec(file_name):
     spec = Spec.from_file(file_name)
     print(" ; Spec Name: " + spec.name)
     output["name"] = spec.name
-    output["version"] = spec.version
-    output["summary"] = spec.summary
+    output["version"] = replace_macros(spec.version, spec)
+    output["summary"] = replace_macros(spec.summary, spec)
     output["license"] = spec.license
     output["url"] = spec.url
     if build_description(spec) is not None:
@@ -43,14 +43,21 @@ def build_description(spec):
     """
     Manage description:
      - Remove redundant text when it copies the summary
-     - Add Packages descriptions when there are lots of packages (TODO)
+     - Add Packages descriptions when there are lots of packages
      :param spec
      :return description or None
     """
     if spec.description is not None:
         description = str(spec.description.replace(spec.summary, '').rstrip())
+        pkg_desc = []
+        for package in spec.packages:
+            if package.is_subpackage and not (package.name.endswith("-doc") or package.name.endswith("-devel"))\
+                    and package.summary is not None:
+                pkg_desc.append(replace_macros(package.name, spec) + ": " + replace_macros(package.summary, spec))
+        if len(pkg_desc) > 1:
+            description = description + "\n\nPackages:\n - " + "\n - ".join(pkg_desc)
         if description:
-            return description
+            return description.rstrip()
     return None
 
 
