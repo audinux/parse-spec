@@ -55,7 +55,7 @@ def build_description(spec):
                     and package.summary is not None:
                 pkg_desc.append(replace_macros(package.name, spec) + ": " + replace_macros(package.summary, spec))
         if len(pkg_desc) > 1:
-            description = description + "\n\nPackages:\n - " + "\n - ".join(pkg_desc)
+            description = description + "\n\nExtra packages:\n - " + "\n - ".join(pkg_desc)
         if description:
             return description.rstrip()
     return None
