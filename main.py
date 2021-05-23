@@ -24,8 +24,8 @@ def parse_spec(file_name):
     output["summary"] = spec.summary
     output["license"] = spec.license
     output["url"] = spec.url
-    if spec.description is not None:
-        output["description"] = spec.description.rstrip()
+    if build_description(spec) is not None:
+        output["description"] = build_description(spec)
     if spec.tag is not None:
         output["tag"] = [x.strip() for x in spec.tag.split(',')]
     if spec.type is not None:
@@ -36,9 +36,22 @@ def parse_spec(file_name):
     for package in spec.packages:
         output["packages"].append(package.name)
 
-    # TODO call some function to parse the tags in comments ...
-
     return output
+
+
+def build_description(spec):
+    """
+    Manage description:
+     - Remove redundant text when it copies the summary
+     - Add Packages descriptions when there are lots of packages (TODO)
+     :param spec
+     :return description or None
+    """
+    if spec.description is not None:
+        description = str(spec.description.replace(spec.summary, '').rstrip())
+        if description:
+            return description
+    return None
 
 
 if __name__ == '__main__':
