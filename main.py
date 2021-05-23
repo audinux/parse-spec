@@ -48,7 +48,7 @@ def build_description(spec):
      :return description or None
     """
     if spec.description is not None:
-        description = str(spec.description.replace(spec.summary, '').rstrip())
+        description = str(spec.description.replace(spec.summary, '').removeprefix(".").removeprefix(",").strip())
         pkg_desc = []
         for package in spec.packages:
             if package.is_subpackage and not (package.name.endswith("-doc") or package.name.endswith("-devel"))\
