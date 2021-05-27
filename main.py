@@ -4,6 +4,9 @@ Currently it output one element per spec file.
 Later we could add one element (or sub-element) per package.
 
 """
+from typing import Dict, List, Any, Union
+
+from analyse import Analysis
 from spec import Spec, replace_macros
 import json
 from pathlib import Path
@@ -64,7 +67,7 @@ def build_description(spec):
 if __name__ == '__main__':
 
     current_dir = "../fedora-spec"      # replace by "." to use the current directory and the spec in tests/
-    rpm_spec = []
+    rpm_spec: list[dict[str, Union[Union[str, None, list[Any]], Any]]] = []
     print("\nFor each directory in \"" + current_dir + "\" , read the RPM spec file")
     path_list = Path(current_dir).glob('**/*.spec')
     for path in path_list:
@@ -75,8 +78,15 @@ if __name__ == '__main__':
         else:
             rpm_spec.append(parse_spec(path_in_str))
 
-    print("  output a json file")
+    print("  Output a json file")
     with open("search-data.pretty.json", "w") as write_file_pp:
         json.dump(rpm_spec, write_file_pp, indent=2)
     with open("search-data.json", "w") as write_file_min:
         json.dump(rpm_spec, write_file_min)
+
+    print("\n\n** Data Analysis **")
+    a = Analysis(rpm_spec)
+    print(" Used only once:")
+    print(" * Categories : " + " | ".join(sorted(a.get_lonely("category"))))
+    print(" * Types      : " + " | ".join(sorted(a.get_lonely("type"))))
+    print(" * Tag        : " + " | ".join(sorted(a.get_lonely("tag"))))
