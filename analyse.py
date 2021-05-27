@@ -14,22 +14,12 @@ To use like this:
 See http://jsdatav.is/chap07.html
 
 """
-from dataclasses import dataclass, field
 from typing import Dict, List, Any, Union
-
-
-@dataclass
-class Count:
-    tag: {str, int} = field(default_factory=dict)
-    type: {str, int} = field(default_factory=dict)
-    category: {str, int} = field(default_factory=dict)
 
 
 class Analysis:
     """ The Goal is to parse the data only once
     """
-    count_tag = {}
-    #count = Count()
     count = {"tag": {}, "type": {}, "category": {}}
 
     def __init__(self, rpm_spec: [dict[str, Union[Union[str, None, list[Any]], Any]]]):
