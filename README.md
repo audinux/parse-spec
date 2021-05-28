@@ -21,8 +21,13 @@ For the "Tags", they are added as comment in the spec file:
 # type: ..
 ...
 ```
-Maybe other facets should be added. 
 
+Other tags are used, but not yet parsed:
+```
+# GUIToolkit: Qt4, Fltk, GTK3, SWT ...
+# LastSourceUpdate: 2020, 2005
+```
+Might be replaced by a `tag: Legacy` or `tag: Obsolete`   
 
 ## Usage
 
