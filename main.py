@@ -57,6 +57,8 @@ def build_description(spec):
             if package.is_subpackage and not (package.name.endswith("-doc") or package.name.endswith("-devel"))\
                     and package.summary is not None:
                 pkg_desc.append(replace_macros(package.name, spec) + ": " + replace_macros(package.summary, spec))
+        if len(pkg_desc) == 1:
+            description = description + "\n\nPackage: " + pkg_desc[0]
         if len(pkg_desc) > 1:
             description = description + "\n\nExtra packages:\n - " + "\n - ".join(pkg_desc)
         if description:
