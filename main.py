@@ -12,6 +12,8 @@ import json
 from pathlib import Path
 
 
+NOT_RACK_TYPE = "Exclude Rack"    # Artificial tag used to exclude "Rack"
+
 def parse_spec(file_name):
     """
     Parse a spec file and append the packages to the list
@@ -33,11 +35,16 @@ def parse_spec(file_name):
         output["tag"] = [x.strip() for x in spec.tag.split(',')]
     if spec.type is not None:
         output["type"] = [x.strip() for x in spec.type.split(',')]
+        if "Rack" not in output["type"]:
+            output["type"].append(NOT_RACK_TYPE)
+    else:
+        output["type"] = [NOT_RACK_TYPE]
     if spec.category is not None:
         output["category"] = [x.strip() for x in spec.category.split(',')]
     output["packages"] = []
     for package in spec.packages:
         output["packages"].append(package.name)
+
 
     return output
 
