@@ -4,7 +4,7 @@ Currently it output one element per spec file.
 Later we could add one element (or sub-element) per package.
 
 """
-from typing import Dict, List, Any, Union
+from typing import Any, Union
 
 from analyse import Analysis
 from spec import Spec, replace_macros
@@ -12,7 +12,9 @@ import json
 from pathlib import Path
 import argparse
 
+
 NOT_RACK_TYPE = "Exclude Rack"    # Artificial tag used to exclude "Rack"
+
 
 def parse_spec(file_name):
     """
@@ -44,7 +46,6 @@ def parse_spec(file_name):
     output["packages"] = []
     for package in spec.packages:
         output["packages"].append(package.name)
-
 
     return output
 

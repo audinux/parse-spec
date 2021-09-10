@@ -14,7 +14,7 @@ To use like this:
 See http://jsdatav.is/chap07.html
 
 """
-from typing import Dict, List, Any, Union
+from typing import Any, Union
 
 
 class Analysis:
