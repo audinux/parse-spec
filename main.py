@@ -10,7 +10,7 @@ from analyse import Analysis
 from spec import Spec, replace_macros
 import json
 from pathlib import Path
-
+import argparse
 
 NOT_RACK_TYPE = "Exclude Rack"    # Artificial tag used to exclude "Rack"
 
@@ -75,10 +75,14 @@ def build_description(spec):
 
 if __name__ == '__main__':
 
-    current_dir = "../fedora-spec"      # replace by "." to use the current directory and the spec in tests/
+    parser = argparse.ArgumentParser()
+    parser.add_argument("spec_path", help="Path to the RPM spec files.", nargs='?', default="../fedora-spec")
+    args = parser.parse_args()
+
+    scan_dir = args.spec_path
     rpm_spec: list[dict[str, Union[Union[str, None, list[Any]], Any]]] = []
-    print("\nFor each directory in \"" + current_dir + "\" , read the RPM spec file")
-    path_list = Path(current_dir).glob('**/*.spec')
+    print("\nFor each directory in \"" + scan_dir + "\" , read the RPM spec file")
+    path_list = Path(scan_dir).glob('**/*.spec')
     for path in path_list:
         path_in_str = str(path)
         print("  File: " + path_in_str, end=" \t\t")

@@ -31,17 +31,15 @@ Might be replaced by a `tag: Legacy` or `tag: Obsolete`
 
 ## Usage
 
-1. Check the path line 44 in `main.py` 
-2. Run `python main.py` 
+Run `python main.py <path to spec files>`  a glob is used to scan sub-folders `**/*.spec`.
 
-For test, the application can read the `tests` directory, which contains a few folders.
+For test, the application can read the `tests` directory, which contains a few folders. Run `python main.py .` 
 
-To run on the full list of spec, clone the `fedora-spec` spec repo next to this repo.
+To run on the full list of spec, clone the `fedora-spec` spec repo next to this repo. Run `python main.py ../fedora-spec`
 
 
 ## TODO
 
-- add the `/*.spec` folder as a program argument
 - Output more statistical analysis
 - Add a mass modification feature
 
