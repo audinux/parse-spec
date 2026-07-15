@@ -43,6 +43,9 @@ def parse_spec(file_name):
         output["type"] = [NOT_RACK_TYPE]
     if spec.category is not None:
         output["category"] = [x.strip() for x in spec.category.split(',')]
+    if spec.screenshot is not None:
+        spec_dir = Path(file_name).parent
+        output["screenshot"] = [str(spec_dir / img.strip()) for img in spec.screenshot.split(',')]
     output["packages"] = []
     for package in spec.packages:
         output["packages"].append(package.name)
