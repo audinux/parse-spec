@@ -4,22 +4,26 @@ Currently it output one element per spec file.
 Later we could add one element (or sub-element) per package.
 
 """
-from typing import Any, Union
+
+import argparse
+import json
+import os
+
+from pathlib import Path
 
 from analyse import Analysis
+from typing import Any, Union
 from spec import Spec, replace_macros
-import json
-from pathlib import Path
-import argparse
 
 
 NOT_RACK_TYPE = "Exclude Rack"    # Artificial tag used to exclude "Rack"
 
 
-def parse_spec(file_name):
+def parse_spec(fedspec_path, file_name):
     """
     Parse a spec file and append the packages to the list
     Even if there are multiple packages, only one element will be returned
+    :param fedspec_path: the path to the fedora-spec repo
     :param file_name:
     :return: the element data
     """
@@ -44,7 +48,7 @@ def parse_spec(file_name):
     if spec.category is not None:
         output["category"] = [x.strip() for x in spec.category.split(',')]
     if spec.screenshot is not None:
-        spec_dir = Path(file_name)
+        spec_dir = Path(os.path.relpath(file_name, fedspec_path))
         output["screenshot"] = [str(spec_dir / img.strip()) for img in spec.screenshot.split(',')]
     output["packages"] = []
     for package in spec.packages:
@@ -93,7 +97,7 @@ if __name__ == '__main__':
         if path.name in ["nwjs.spec"]:  # Some .spec are strange!
             print("Excluded!!")
         else:
-            rpm_spec.append(parse_spec(path_in_str))
+            rpm_spec.append(parse_spec(args.spec_path, path_in_str))
 
     print("  Output a json file")
     with open("search-data.pretty.json", "w") as write_file_pp:
