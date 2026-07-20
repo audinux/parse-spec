@@ -17,7 +17,7 @@ from spec import Spec, replace_macros
 
 
 NOT_RACK_TYPE = "Exclude Rack"    # Artificial tag used to exclude "Rack"
-
+EXCLUSE_RACK = False
 
 def parse_spec(fedspec_path, file_name):
     """
@@ -41,7 +41,7 @@ def parse_spec(fedspec_path, file_name):
         output["tag"] = [x.strip() for x in spec.tag.split(',')]
     if spec.type is not None:
         output["type"] = [x.strip() for x in spec.type.split(',')]
-        if "Rack" not in output["type"]:
+        if "Rack" not in output["type"] and EXCLUDE_RACK:
             output["type"].append(NOT_RACK_TYPE)
     else:
         output["type"] = [NOT_RACK_TYPE]
