@@ -17,7 +17,7 @@ from spec import Spec, replace_macros
 
 
 NOT_RACK_TYPE = "Exclude Rack"    # Artificial tag used to exclude "Rack"
-EXCLUSE_RACK = False
+EXCLUDE_RACK = False
 
 def parse_spec(fedspec_path, file_name):
     """
